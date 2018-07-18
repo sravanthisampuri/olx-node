@@ -24,6 +24,8 @@ let registeradd = (req, res) => {
 
 }
 
+
+
 module.exports = {
     registeradd
 }
