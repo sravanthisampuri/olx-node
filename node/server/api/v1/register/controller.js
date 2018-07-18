@@ -3,24 +3,27 @@ let mongoose = require('mongoose');
 // let jwt = require('jsonwebtoken');
 // let config = require('../../../config/config');
 
-let registerCollection=require('./model')
+let registerCollection = require('./model')
 
-let registeradd = (req,res)=>{
-    registerCollection.create(req.body)
-    .then(
-        (response)=>{
-            res.status(200).json({ status : true , message :"Success"  , addDetails:response})
-        }
-    )
-    .catch(
-        (error)=>{
-
-            res.status(500).json({ status : false , message :"Error while creating add , please again"   })
-        }
-    )
+let registeradd = (req, res) => {
+    console.log(req.body)
+    var reg=new registerCollection(req.body)
+    reg.save(req.body)
+        .then(
+            response => {
+                console.log('resp',response);
+                res.status(200).json({ status: true, message: "Success", addDetails: response })
+            }
+        )
+        .catch(
+            error => {
+                console.log('err',error);
+                res.status(500).json({ status: false, message: "Error while creating add , please again" })
+            }
+        )
 
 }
 
-module.exports ={
+module.exports = {
     registeradd
 }

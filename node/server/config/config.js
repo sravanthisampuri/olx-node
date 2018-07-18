@@ -2,12 +2,11 @@ module.exports = {
     port : 3001,
     jwt : {
         secret:"hkjjkrh!23",
-        ooptions: {expiresIn: 365 * 60 * 60 * 24 }
-
+        options: {expiresIn: 365 * 60 * 60 * 24 }
     },
     db : {
         mongo:{
-            uri:" mongodb://localhost:27017/learningnode",
+            uri:"mongodb://localhost:27017/olxNode",
             options : {
                 user :'',
                 pass : ''

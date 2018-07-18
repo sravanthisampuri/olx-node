@@ -1,6 +1,6 @@
 
 var express = require('express');
-var path = require('path');
+/* var path = require('path'); */
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -14,6 +14,23 @@ app.use(logger('dev'));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
+let mongoose = require('mongoose');
+let db = require("./server/config/config").db;
+
+let options = {
+	user: db.user,
+    pass: db.password,
+    socketTimeoutMS: 0,
+    keepAlive: true,
+    useNewUrlParser: true,
+	reconnectTries: 30
+};
+let connect = mongoose.connect(
+	db.mongo.uri
+,function(err,success){
+    /* console.log("success",success);
+    console.log('err======>',db.mongo.uri,err); */
+});
 
 let routesV1_0 = require('./server/routes/routes.v1.0');
 

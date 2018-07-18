@@ -2,13 +2,19 @@
 // let jwt = require('jsonwebtoken')
 // let config = require('../../../config/config')
 
-let logCollection = require('./model');
+let logCollection = require('../register/model');
 
 let loginadd =(req,res)=>{
-    logCollection.findOne(req.body)
+    console.log(req.body)
+    logCollection.findOne({email:req.body.email})
         .then(
             (response)=>{
-                res.status(200).json({ status : true , message :"Success"  , addDetails:response})
+                /* console.log(response) */
+                if(response.password == req.body.password){
+                    res.status(200).json({ status : true , message :"Successfully loggedin" , user :response   }); 
+                }else{
+                    res.status(200).json({ status : false , message :"Wrong Credentials"   });  
+                }
             }
         ).catch(
             (error)=>{
