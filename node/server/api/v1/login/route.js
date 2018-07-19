@@ -6,6 +6,12 @@ router.post('/createAdd',logController.loginadd)
 router.get('/getdetail/:id',logController.getdetails)
 router.put('/editdetail',logController.editdetails)
 
+router.get('/getDetails/:id',logController.getUserDetails)
+
+router.put('/editDetails',logController.editUserDetails);
+
+router.delete('/deleteUser', logController.deleteUser);
+
 
 
 module.exports = router;
