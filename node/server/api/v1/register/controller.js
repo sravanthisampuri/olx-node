@@ -1,11 +1,12 @@
 let mongoose = require('mongoose');
 /* let UserService = require('./service'); */
 // let jwt = require('jsonwebtoken');
-// let config = require('../../../config/config');
+let config = require('../../../config/config');
 
 let registerCollection=require('./model')
 
 let registeradd = (req,res)=>{
+    console.log(req.body)
     registerCollection.create(req.body)
     .then(
         (response)=>{
