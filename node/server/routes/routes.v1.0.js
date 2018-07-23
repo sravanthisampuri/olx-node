@@ -1,5 +1,4 @@
 let express = require('express');
-
 let router = express.Router();
 
 let loginRouter = require('../api/v1/login/route');

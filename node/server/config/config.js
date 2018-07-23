@@ -1,5 +1,5 @@
 module.exports = {
-    port : 3001,
+    port : 3000,
     jwt : {
         secret:"hkjjkrh!23",
         options: {expiresIn: 365 * 60 * 60 * 24 }
@@ -14,5 +14,5 @@ module.exports = {
         }
        
     },
-    baseUrl:'http://localhost:'+3001,
+    baseUrl:'http://localhost:'+3000,
 }

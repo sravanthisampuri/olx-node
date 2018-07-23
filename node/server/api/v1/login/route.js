@@ -10,6 +10,7 @@ router.put('/editDetails',logController.editUserDetails);
 
 router.delete('/deleteUser', logController.deleteUser);
 
+router.get('/getProfileDetails/:id', logController.getProfileData );
 
 
 module.exports = router;
