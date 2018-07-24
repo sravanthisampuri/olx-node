@@ -1,9 +1,12 @@
-// let mongoose = require('mongoose');
+
+
+let mongoose = require('mongoose');
+
 // let jwt = require('jsonwebtoken')
 // let config = require('../../../config/config')
-
+let ObjectId = mongoose.Schema.objectId
 let logCollection = require('../register/model');
-let AddCollection = require('../adds/model');
+let AddCollection = require('../submitadd/model');
 
 let loginadd = (req, res) => {
     console.log(req.body)
@@ -25,33 +28,33 @@ let loginadd = (req, res) => {
 }
 
 
-let getdetails=(req,res)=>{
-console.log(req)
-logCollection.findById({_id:req.params.id})
-.then(
-    (response)=>{
-
-        res.status(200).json({ status : true , message :"Successfully Fetched Details" , userData :response   });
-    }
-).catch(
-    (error)=>{
-        res.status(500).json({ status : true , message :"Error While fetching Details"}); 
-    }
-)
-}
-let editdetails = (req,res)=>{
-    // console.log(req);
-        logCollection.findOneAndUpdate({_id:req.body.id},{$set:{ "password":req.body.password }},{new:true})
+let getdetails = (req, res) => {
+    console.log(req)
+    logCollection.findById({ _id: req.params.id })
         .then(
-            (response)=>{
-                res.status(200).json({ status : true , message :"Successfully Edited Details" , userData :response   }); 
+            (response) => {
+
+                res.status(200).json({ status: true, message: "Successfully Fetched Details", userData: response });
             }
         ).catch(
-            (error)=>{
-                res.status(500).json({ status : true , message :"Error While updating Details"}); 
+            (error) => {
+                res.status(500).json({ status: true, message: "Error While fetching Details" });
             }
         )
-    }
+}
+let editdetails = (req, res) => {
+    // console.log(req);
+    logCollection.findOneAndUpdate({ _id: req.body.id }, { $set: { "password": req.body.password } }, { new: true })
+        .then(
+            (response) => {
+                res.status(200).json({ status: true, message: "Successfully Edited Details", userData: response });
+            }
+        ).catch(
+            (error) => {
+                res.status(500).json({ status: true, message: "Error While updating Details" });
+            }
+        )
+}
 
 
 
@@ -100,16 +103,62 @@ let deleteUser = (req, res) => {
 }
 
 let getProfileData = (req, res) => {
-    logCollection.aggregate([{ $match : { _id : req.params.id } },{
+    let _id = req.params.id;
+    logCollection.aggregate([
+        { $match : {
+            /*  $or : [{ email : email },{ mobile : mobile }],
+            "groups" : { $in : ["Sports","Football","baseball","Hockey","WWE","dhags","ashjsgfjd","d,jhs"] }, */
+            "_id" : mongoose.Types.ObjectId(_id) 
+        } },
+        {
         $lookup:
             {
-                from: AddCollection,
-                localField: _id,
-                foreignField: creatorId,
+                from: "adds",
+                localField: "_id",
+                foreignField: "creatorId",
                 as: "addDetails"
             }
+    },
+    
+]).then(
+    (response)=>{
+        console.log(response);
+        res.status(200).json({ status: true, message: "Success", userData: response });
     }
-])
+).catch(
+    (err)=>{
+        console.log(err);
+        res.status(500).json({ status: false, message: "Error" });
+    }
+)
+
+
+
+
+    /* AddCollection.find({ creatorId: req.params.id })
+        .then(
+            (addResponse) => {
+                let addsData = addResponse;
+                logCollection.findOne({ _id: req.params.id })
+                    .then(
+                        (userData) => {
+                            res.status(200).json({ status: true, message: "Success", userData: userData, addDetails: addsData });
+                        }
+                    ).catch(
+                        (err) => {
+                            console.log(err);
+                            res.status(500).json({ status: false, message: "Error" });
+                        }
+                    )
+            }
+        ).catch(
+            (err) => {
+                console.log(err);
+                res.status(500).json({ status: false, message: "Error" });
+            }
+        ) */
+
+
 }
 
 

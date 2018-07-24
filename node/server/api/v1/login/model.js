@@ -8,5 +8,5 @@ let loginDetails = new mongoose.Schema({
 
 })
 
-let logModel = mongoose.model('ADDS',loginDetails);
+let logModel = mongoose.model('users',loginDetails);
 module.exports = logModel;
